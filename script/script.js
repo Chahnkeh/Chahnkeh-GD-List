@@ -104,6 +104,19 @@ function isNumber(value) {
     return typeof value === 'number' && Number.isFinite(value);
 }
 
+/* ---------- Comments ---------- */
+
+function buildCommentsSection(item) {
+    const text = typeof item.comments === 'string' ? item.comments.trim() : '';
+    if (!text) return '';
+
+    return `
+            <section class="preview-comments">
+                <h3 class="preview-label">Comments</h3>
+                <p>${escapeHTML(text)}</p>
+            </section>`;
+}
+
 /* ---------- Video ---------- */
 
 // Accepts watch?v=, youtu.be/, /shorts/, /embed/ and /live/ links.
@@ -346,11 +359,8 @@ function updatePreview(item, rankDisplay, rankLabel) {
                 </h2>
                 <p class="preview-meta">${escapeHTML(item.promoted)}</p>
             </header>
+            ${buildCommentsSection(item)}
             ${buildVideoSection(item)}
-            <section class="preview-body">
-                <h3 class="preview-label">Comments</h3>
-                <p>${escapeHTML(item.comments)}</p>
-            </section>
             ${buildScoreSection(item)}
             <dl class="preview-stats">
                 ${buildStats(item)}
