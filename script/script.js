@@ -2,11 +2,12 @@ let selectedItem = null;
 
 const STATUS_MARKERS = {
     "Promoted": { symbol: "↑", label: "Promoted" },
+    "Demoted": { symbol: "↓", label: "Demoted" },
     "Technicality": { symbol: "*", label: "Technicality" },
     "Not Demon": { symbol: "X", label: "Not Demon" }
 };
 
-const UNRANKED_STATUSES = ["Benchmark", "Not Demon", "Promoted", "Technicality"];
+const UNRANKED_STATUSES = ["Benchmark", "Not Demon", "Promoted", "Demoted", "Technicality"];
 
 // Every page that uses the ranking layout. Each one loads data/_<page>.json
 const RANKING_PAGES = ['edl', 'mdl', 'hdl', 'idl', 'aredl'];
