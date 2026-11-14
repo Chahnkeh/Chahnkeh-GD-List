@@ -358,7 +358,6 @@ function updatePreview(item, rankDisplay, rankLabel) {
                     <span class="sr-only">${rankLabel}:</span>${escapeHTML(item.name)}
                     <span class="preview-meta">${escapeHTML(item.creator)}</span>
                 </h2>
-                <p class="preview-meta">${escapeHTML(item.promoted)}</p>
             </header>
             ${buildCommentsSection(item)}
             ${buildVideoSection(item)}
