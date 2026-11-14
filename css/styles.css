@@ -197,6 +197,8 @@ nav {
     text-decoration-thickness: 2px;
 }
 
+/* ---------- Ranking layout (list + preview) ---------- */
+
 .layout-grid {
     flex: 1;
     width: 100%;
@@ -206,11 +208,12 @@ nav {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     gap: 0;
-    align-items: start;
+    min-height: 0;
 }
 
 .list-section {
     min-width: 0;
+    min-height: 0;
     display: flex;
     flex-direction: column;
     background-color: var(--bg-deep);
@@ -218,42 +221,43 @@ nav {
 }
 
 .preview-section {
-    position: sticky;
-    top: 4.5rem;
-    align-self: start;
     min-width: 0;
+    min-height: 0;
     padding: 1rem;
 }
 
+/* Desktop: two independent scroll containers */
 @media (min-width: 768px) {
 
     body[data-page="edl"],
-    body[data-page="mdl"] {
+    body[data-page="mdl"],
+    body[data-page="idl"],
+    body[data-page="aredl"] {
         height: 100vh;
         height: 100dvh;
         min-height: 30rem;
+        overflow: hidden; /* page itself does not scroll */
     }
 
     .layout-grid {
-        min-height: 0;
         grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
         grid-template-rows: minmax(0, 1fr);
     }
 
     .list-section {
-        min-height: 0;
         border-bottom: 0;
         border-right: 1px solid var(--line);
+        overflow: hidden; /* list column is a fixed frame */
     }
 
     .preview-section {
-        min-height: 0;
-        overflow-y: auto;
+        overflow-y: auto; /* right side scrolls on its own */
         padding: clamp(1rem, 4vw, 2.5rem);
     }
 }
 
 .list-section h1 {
+    flex: none;
     padding: 1rem 1rem 0.5rem;
     font-size: 0.8rem;
     font-weight: 700;
@@ -264,6 +268,7 @@ nav {
 
 .search-controls,
 .filter-controls {
+    flex: none;
     display: flex;
     flex-direction: column;
     gap: 0.35rem;
@@ -312,6 +317,7 @@ nav {
 }
 
 .results-status {
+    flex: none;
     min-height: 1.5rem;
     padding: 0 1rem 0.5rem;
     font-size: 0.8rem;
@@ -338,7 +344,7 @@ nav {
     .ranking-list {
         flex: 1;
         min-height: 0;
-        max-height: none;
+        max-height: none; /* fills remaining height of list-section and scrolls */
     }
 }
 
@@ -664,7 +670,6 @@ nav {
     border: 0;
 }
 
-/* an odd stat out fills the whole last row */
 .stat:last-child:nth-child(odd) {
     grid-column: 1 / -1;
 }
@@ -711,14 +716,13 @@ nav {
     --dot: #ef4444;
 }
 
-/* black disappears on a dark page, so it gets a light outline */
 .reliability-dot[data-level="0"] {
     --dot: #000;
     border-color: #8b95ad;
     box-shadow: none;
 }
 
-/* ---------- Comments (compact, sits under the header) ---------- */
+/* ---------- Comments ---------- */
 
 .preview-comments {
     padding: 0.85rem 1.5rem 1rem;
