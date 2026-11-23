@@ -1,16 +1,12 @@
 {
     "name": "Chasing Light",
-    "creator": "stardust1971",
-    "id": 9571582,
+    "creator": "",
+    "id": null,
     "gddlRating": "Tier 16",
-    "promoted": "Demoted",
-    "video": "https://www.youtube.com/watch?v=MQF6n1ANUWg",
-    "comments": "Currently the hardest HDL. Literally why.",
+    "promoted": "No",
+    "video": "",
+    "comments": "",
     "reliable": "-",
     "reliability": 4,
-    "gameplay": 55,
-    "deco": 60,
-    "song": 70,
-    "attempts": 423,
-    "worstFail": 97
+    "enjoyment": 6
 }
