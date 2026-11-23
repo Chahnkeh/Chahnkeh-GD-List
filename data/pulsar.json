@@ -1,16 +1,12 @@
 {
-    "name": "pulsar",
-    "creator": "ilAkarili",
-    "id": 36099108,
-    "gddlRating": "Tier 18",
+    "name": "Pulsar",
+    "creator": "",
+    "id": null,
+    "gddlRating": "Tier 15",
     "promoted": "No",
-    "video": "https://www.youtube.com/watch?v=oVVrz6P2HQI?t=849",
-    "comments": "My longest standing hardest Nine Circles level and not a fun experience. Got extremely unlucky on it.",
+    "video": "",
+    "comments": "",
     "reliable": "-",
     "reliability": 4,
-    "gameplay": 20,
-    "deco": 90,
-    "song": 70,
-    "attempts": 1536,
-    "worstFail": 96
+    "enjoyment": 7
 }
