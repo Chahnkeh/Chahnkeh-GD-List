@@ -121,8 +121,9 @@ function buildCommentsSection(item) {
 /* ---------- Video ---------- */
 
 // Accepts watch?v=, youtu.be/, /shorts/, /embed/ and /live/ links.
-// Returns the 11-character video ID, or null if the link isn't usable.
-function getYouTubeId(url) {
+// Also extracts a start time from ?t= / &t= (supports 90, 90s, 1m30s, etc.)
+// Returns { id, start } or null if the link isn't usable.
+function parseYouTube(url) {
     if (typeof url !== 'string') return null;
 
     let parsed;
@@ -146,18 +147,36 @@ function getYouTubeId(url) {
         }
     }
 
-    return id && /^[A-Za-z0-9_-]{11}$/.test(id) ? id : null;
+    if (!id || !/^[A-Za-z0-9_-]{11}$/.test(id)) return null;
+
+    // Extract start time (t=90, t=90s, t=1m30s, etc.)
+    let start = null;
+    const t = parsed.searchParams.get('t') || parsed.searchParams.get('start');
+    if (t) {
+        const match = t.match(/(?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s?)?/);
+        if (match) {
+            const hours = parseInt(match[1] || 0, 10);
+            const mins  = parseInt(match[2] || 0, 10);
+            const secs  = parseInt(match[3] || 0, 10);
+            start = hours * 3600 + mins * 60 + secs;
+            if (start === 0) start = null;
+        }
+    }
+
+    return { id, start };
 }
 
 function buildVideoSection(item) {
-    const id = getYouTubeId(item.video);
-    if (!id) return '';
+    const parsed = parseYouTube(item.video);
+    if (!parsed) return '';
+
+    const startParam = parsed.start ? `?start=${parsed.start}` : '';
 
     return `
             <section class="preview-video">
                 <div class="video-frame">
                     <iframe
-                        src="https://www.youtube-nocookie.com/embed/${id}"
+                        src="https://www.youtube-nocookie.com/embed/${parsed.id}${startParam}"
                         title="${escapeHTML(item.name)} video"
                         loading="lazy"
                         referrerpolicy="strict-origin-when-cross-origin"
