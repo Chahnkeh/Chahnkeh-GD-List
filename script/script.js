@@ -13,7 +13,6 @@ const UNRANKED_STATUSES = ["Benchmark", "Not Demon", "Promoted", "Demoted", "Tec
 const RANKING_PAGES = ['edl', 'mdl', 'hdl', 'idl', 'aredl'];
 
 // Overall score = gameplay 60% + deco 30% + song 10%
-// Weights are out of 10 (integers) so the rounding stays exact.
 const SCORE_WEIGHTS = { gameplay: 6, deco: 3, song: 1 };
 const SCORE_LABELS = { gameplay: 'Gameplay', deco: 'Deco', song: 'Song' };
 
@@ -49,7 +48,6 @@ async function initRankingPage(type) {
 
         const fileNames = await response.json();
 
-        // Entries may be written as "chimera" or "chimera.json"
         const fetchPromises = fileNames.map(file => {
             const path = file.endsWith('.json') ? file : `${file}.json`;
             return fetch(`../data/${path}`).then(res => res.json());
@@ -58,8 +56,8 @@ async function initRankingPage(type) {
 
         const listContainer = document.getElementById('ranking-list');
         const filterSelect = document.getElementById('status-filter');
-
         const searchInput = document.getElementById('level-search');
+
         let statusFilter = 'All';
         let searchQuery = '';
 
@@ -120,9 +118,6 @@ function buildCommentsSection(item) {
 
 /* ---------- Video ---------- */
 
-// Accepts watch?v=, youtu.be/, /shorts/, /embed/ and /live/ links.
-// Also extracts a start time from ?t= / &t= (supports 90, 90s, 1m30s, etc.)
-// Returns { id, start } or null if the link isn't usable.
 function parseYouTube(url) {
     if (typeof url !== 'string') return null;
 
@@ -149,7 +144,6 @@ function parseYouTube(url) {
 
     if (!id || !/^[A-Za-z0-9_-]{11}$/.test(id)) return null;
 
-    // Extract start time (t=90, t=90s, t=1m30s, etc.)
     let start = null;
     const t = parsed.searchParams.get('t') || parsed.searchParams.get('start');
     if (t) {
@@ -223,26 +217,7 @@ function buildScoreSection(item) {
             </section>`;
 }
 
-/* ---------- Enjoyment (MDL / HDL style) ---------- */
-
-function buildEnjoymentSection(item) {
-    if (!isNumber(item.enjoyment)) return '';
-
-    const value = Math.round(item.enjoyment);
-
-    return `
-            <section class="preview-score" aria-label="Enjoyment">
-                <div class="score-overall">
-                    <span class="score-grade" data-grade="enjoyment" aria-label="Enjoyment ${value} out of 10">${value}</span>
-                    <div>
-                        <h3 class="preview-label">Enjoyment</h3>
-                        <p class="score-number">${value}<span class="score-max">/10</span></p>
-                    </div>
-                </div>
-            </section>`;
-}
-
-/* ---------- Stats (attempts / worst fail only render if present) ---------- */
+/* ---------- Stats ---------- */
 
 function buildStats(item) {
     const stats = [
@@ -388,6 +363,13 @@ function updatePreview(item, rankDisplay, rankLabel) {
     const previewContainer = document.getElementById('preview-content');
     if (!previewContainer) return;
 
+    // Right-aligned enjoyment badge in the header
+    let enjoymentBadge = '';
+    if (isNumber(item.enjoyment)) {
+        const value = Math.round(item.enjoyment);
+        enjoymentBadge = `<span class="preview-enjoyment" data-enjoyment="${value}" title="Enjoyment">${value}</span>`;
+    }
+
     previewContainer.innerHTML = `
         <article class="preview-card">
             <header class="preview-header">
@@ -395,11 +377,12 @@ function updatePreview(item, rankDisplay, rankLabel) {
                     <span class="preview-rank" aria-hidden="true"${markerTitleAttr(item)}>${rankDisplay}</span>
                     <span class="sr-only">${rankLabel}:</span>${escapeHTML(item.name)}
                     <span class="preview-meta">${escapeHTML(item.creator)}</span>
+                    ${enjoymentBadge}
                 </h2>
             </header>
             ${buildCommentsSection(item)}
             ${buildVideoSection(item)}
-            ${buildScoreSection(item) || buildEnjoymentSection(item)}
+            ${buildScoreSection(item)}
             <dl class="preview-stats">
                 ${buildStats(item)}
             </dl>
