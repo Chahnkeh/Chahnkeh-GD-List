@@ -186,7 +186,7 @@ function buildVideoSection(item) {
             </section>`;
 }
 
-/* ---------- Overall score ---------- */
+/* ---------- Overall score (IDL style) ---------- */
 
 function calculateScore(item) {
     const keys = Object.keys(SCORE_WEIGHTS);
@@ -220,6 +220,25 @@ function buildScoreSection(item) {
                 </div>
                 <dl class="score-breakdown">${breakdown}
                 </dl>
+            </section>`;
+}
+
+/* ---------- Enjoyment (MDL / HDL style) ---------- */
+
+function buildEnjoymentSection(item) {
+    if (!isNumber(item.enjoyment)) return '';
+
+    const value = Math.round(item.enjoyment);
+
+    return `
+            <section class="preview-score" aria-label="Enjoyment">
+                <div class="score-overall">
+                    <span class="score-grade" data-grade="enjoyment" aria-label="Enjoyment ${value} out of 10">${value}</span>
+                    <div>
+                        <h3 class="preview-label">Enjoyment</h3>
+                        <p class="score-number">${value}<span class="score-max">/10</span></p>
+                    </div>
+                </div>
             </section>`;
 }
 
@@ -380,7 +399,7 @@ function updatePreview(item, rankDisplay, rankLabel) {
             </header>
             ${buildCommentsSection(item)}
             ${buildVideoSection(item)}
-            ${buildScoreSection(item)}
+            ${buildScoreSection(item) || buildEnjoymentSection(item)}
             <dl class="preview-stats">
                 ${buildStats(item)}
             </dl>
