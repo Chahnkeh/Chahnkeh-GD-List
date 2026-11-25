@@ -1,75 +1,61 @@
-/* ===== Preview header layout ===== */
-.preview-title {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.35rem 0.6rem;
+:root {
+    --bg-deep: #07080c;
+    --bg-panel: #0c0e14;
+    --bg-raised: #11141c;
+    --bg-field: #090b10;
+
+    --line: #1d2230;
+    --line-strong: #2d3549;
+    --control-border: #5f6b86;
+    --text: #f3f5f9;
+    --text-dim: #a4adc0;
+
+    --radius: 6px;
+    --font-body: 'Roboto', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-mono: ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace;
+
+    --sidebar-w: clamp(240px, 22vw, 320px);
+
+    --accent: #125bfb;
+    --accent-text: #6f9dff;
+    --accent-rgb: 18 91 251;
+
+    color-scheme: dark;
+}
+
+body[data-page="home"] {
+    --accent: #125bfb;
+    --accent-text: #6f9dff;
+    --accent-rgb: 18 91 251;
+}
+
+body[data-page="edl"] {
+    --accent: #9944ff;
+    --accent-text: #c08cff;
+    --accent-rgb: 153 68 255;
+}
+
+body[data-page="mdl"] {
+    --accent: #ff00ff;
+    --accent-text: #ff7bff;
+    --accent-rgb: 255 0 255;
+}
+
+* {
+    box-sizing: border-box;
     margin: 0;
-    width: 100%;
+    padding: 0;
 }
 
-.preview-rank {
-    flex-shrink: 0;
-}
-
-.preview-meta {
-    opacity: 0.75;
-    font-weight: 400;
-}
-
-/* ===== Enjoyment badge (right-aligned) ===== */
-.preview-enjoyment {
-    margin-left: auto;          /* pushes it to the far right */
-    font-weight: 700;
-    font-size: 1.15em;
-    min-width: 1.75em;
-    text-align: center;
-    padding: 0.18em 0.5em;
-    border-radius: 5px;
-    line-height: 1.2;
-    background: #333;
-    color: #fff;
-    flex-shrink: 0;
-}
-
-/* GDDL-style enjoyment colours */
-.preview-enjoyment[data-enjoyment="10"],
-.preview-enjoyment[data-enjoyment="9"] {
-    background: #2ecc71;
-    color: #fff;
-}
-.preview-enjoyment[data-enjoyment="8"] {
-    background: #27ae60;
-    color: #fff;
-}
-.preview-enjoyment[data-enjoyment="7"] {
-    background: #f1c40f;
-    color: #111;
-}
-.preview-enjoyment[data-enjoyment="6"] {
-    background: #e67e22;
-    color: #fff;
-}
-.preview-enjoyment[data-enjoyment="5"] {
-    background: #e74c3c;
-    color: #fff;
-}
-.preview-enjoyment[data-enjoyment="4"],
-.preview-enjoyment[data-enjoyment="3"] {
-    background: #c0392b;
-    color: #fff;
-}
-.preview-enjoyment[data-enjoyment="2"],
-.preview-enjoyment[data-enjoyment="1"],
-.preview-enjoyment[data-enjoyment="0"] {
-    background: #7f1d1d;
-    color: #fff;
-}
-
-/* Optional: slightly larger on desktop */
-@media (min-width: 768px) {
-    .preview-enjoyment {
-        font-size: 1.25em;
-        padding: 0.2em 0.55em;
-    }
-}
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-body);
+    line-height: 1.6;
+    color: var(--text);
+    background-color: var(--bg-panel);
+    background-image:
+        radial-gradient(60rem 28rem at 85% -8%, rgb(var(--accent-rgb) / 0.16), transparent 70%),
+        linear-gradient(rgb(255 255 255 / 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, 
