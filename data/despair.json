@@ -1,12 +1,16 @@
 {
     "name": "Despair",
-    "creator": "",
-    "id": null,
+    "creator": "ViPriN",
+    "id": 24595125,
     "gddlRating": "Tier 15",
     "promoted": "No",
-    "video": "",
+    "video": "https://www.youtube.com/watch?v=NLvLJkUXFis&t=312",
     "comments": "",
     "reliable": "-",
     "reliability": 4,
-    "enjoyment": 5
+    "gameplay": 40,
+    "deco": 50,
+    "song": 60,
+    "attempts": 450,
+    "worstFail": 82
 }
