@@ -231,6 +231,7 @@ nav {
 
     body[data-page="edl"],
     body[data-page="mdl"],
+    body[data-page="hdl"],
     body[data-page="idl"],
     body[data-page="aredl"] {
         height: 100vh;
